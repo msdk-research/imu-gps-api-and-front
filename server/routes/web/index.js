@@ -12,8 +12,6 @@ router.get('/', (req, res, next) => {
   res.json({
     message: 'Web API is working'
   });
-  // res.sendFile(`${path2static}devcycle.png`);
-  next();
 });
 
 module.exports = router;
