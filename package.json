@@ -1,7 +1,7 @@
 {
-  "name": "mongo-express-start",
+  "name": "imu-gps-api-and-front",
   "version": "0.0.1",
-  "description": "A generator for a webapp server based on express, mongo and many other things 😀",
+  "description": "",
   "main": "main.js",
   "scripts": {
     "start": "node main.js",
@@ -31,8 +31,8 @@
     "lodash": "^4.17.19",
     "moment": "^2.27.0",
     "moment-duration-format": "^2.3.2",
-    "mongodb": "^3.6.0",
-    "morgan": "^1.10.0"
+    "morgan": "^1.10.0",
+    "node-csv": "^0.1.2"
   },
   "devDependencies": {
     "eslint": "^7.5.0",
