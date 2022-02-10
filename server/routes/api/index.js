@@ -9,9 +9,8 @@ const router = express.Router();
 const parserClass = require('../../data/parser');
 const Parser = parserClass.Parser;
 
-const ParserGPS = new Parser('./server/data/local/dekart_16_gps.csv');
 const ParserIMU = new Parser('./server/data/local/dekart_16_gyro.csv');
-
+const ParserGPS = new Parser('./server/data/local/dekart_16_gps.csv');
 
 router.get('/', (req, res) => {
   res.json({
@@ -19,20 +18,50 @@ router.get('/', (req, res) => {
   });
 });
 
+router.get('/imu', (req, res) => {
+  res.json({
+    message: `Error: please query the following url '/imu/:id'`
+  })
+})
+
+router.get('/gps', (req, res) => {
+  res.json({
+    message: `Error: please query the following url '/gps/:id'`
+  })
+})
+
+router.post('/imu', (req, res) => {
+  ParserIMU.readLines((data) => {
+    res.json({
+      message: data
+    })
+  })
+})
+
+router.post('/gps', (req, res) => {
+  ParserGPS.readLines((data) => {
+    res.json({
+      message: data
+    })
+  })
+})
+
 router.get('/imu/:n', (req, res) => {
   let n = req.params.n;
-  let lines = ParserIMU.readNLines(n);
-  res.json({
-    message: `${lines}`
-  })
+  ParserIMU.readNLines(n, (data) => {
+    res.writeHead(200, {'Content-Type': 'text/plain'});
+    res.write(data);
+    res.end();
+  });
 })
 
 router.get('/gps/:n', (req, res) => {
   let n = req.params.n
-  let lines = ParserGPS.readNLines(n);
-  res.json({
-    message: `${lines}`
-  })
+  ParserGPS.readNLines(n, (data) => {
+    res.writeHead(200, {'Content-Type': 'text/plain'});
+    res.write(data);
+    res.end();
+  });
 })
 
 module.exports = router;
