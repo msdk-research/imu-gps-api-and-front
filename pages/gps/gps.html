@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>GPS</title>
+    <style>
+        .min-icon {
+            background: red;
+            border-radius: 50%;
+            width: .5px;
+            height: .5px;
+        }
+    </style>
+    <link 
+        rel="stylesheet" 
+        href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+        integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+        crossorigin=""
+    />
+    <script 
+        src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+        integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+        crossorigin="">
+    </script>
+	<script type="text/javascript" src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
+</head>
+<body>
+    <div id="map" style="width:100%; height: 500px;"></div>
+    <div class="container"></div>
+</body>
+<script>
+    const minIcon = L.divIcon({className: 'min-icon'});
+    const map = L.map('map').setView([55.742, 37.527], 19);
+    
+    // add OpenStreetMap tiles
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 19,
+    attribution: '&copy; <a href="https://openstreetmap.org/copyright">OpenStreetMap contributors</a>'
+    }).addTo(map);
+
+    // add Yandex tiles
+    L.tileLayer('http://vec{s}.maps.yandex.net/tiles?l=map&v=4.55.2&z={z}&x={x}&y={y}&scale=2&lang=ru_RU', {
+    attribution: '<a href="https://yandex.ru/" target="_blank">Яндекс</a>',
+    maxZoom: 19,
+    }).addTo(map);
+
+    async function getData() {
+        let url = 'http://localhost:8888/api/gps'; // MARK: This needs to swapped to host's ip
+        try {
+            let res = await fetch(url, {
+                method: 'POST',
+                mode: 'cors',
+                credentials: 'same-origin'
+            });
+            return await res.json();
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    async function renderData() {
+        const container = document.querySelector('.container');
+        container.innerHTML = `<p>Data is loading, please wait.</p>`;
+        const data = await getData();
+        container.innerHTML = `<p style="white-space: pre-wrap;">${data.message}</p>`;
+
+        const markers = [];
+        data.message.split('\n').forEach(row => {
+            cells = row.split(',');
+            const marker = [];
+            if (typeof(cells[1]) != 'Number') {
+                cells[2] == 'N' ? marker.push(cells[1]) : marker.push(-cells[1]); // if !N then lat = -lat
+                cells[4] == 'E' ? marker.push(cells[3]) : marker.push(-cells[3]); // if !E then lon = -lon
+                markers.push(marker);
+            }
+        });
+
+        markers.forEach(mark => {
+            if(mark[0]) L.marker(mark, {icon: minIcon}).addTo(map);
+        });
+    }
+    
+    renderData();
+</script>
+</html>

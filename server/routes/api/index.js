@@ -14,19 +14,19 @@ const ParserGPS = new Parser('./server/data/local/dekart_16_gps.csv');
 
 router.get('/', (req, res) => {
   res.json({
-    message: 'API is working'
+    message: 'API server is working'
   });
 });
 
 router.get('/imu', (req, res) => {
-  res.json({
-    message: `Error: please query the following url '/imu/:id'`
+  res.status(404).json({
+    message: `Error: For the html page please query 'host:port/imu'\nFor the file's top n lines please query 'host:port/api/imu/:n'`
   })
 })
 
 router.get('/gps', (req, res) => {
-  res.json({
-    message: `Error: please query the following url '/gps/:id'`
+  res.status(404).json({
+    message: `Error: For the html page please query 'host:port/gps'\nFor the file's top n lines please query 'host:port/api/gps/:n'`
   })
 })
 
