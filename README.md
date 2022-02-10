@@ -1,6 +1,6 @@
-# Mongo Express Start! A batteries included generator for Node.js Servers.
+# IMU-GPS-API-AND-FRONT
 
-A generator for a webapp server based on express, mongoDB and many other things 😀
+Node.js/express backend with a simple html/js frontend
 
 ## Getting Started
 
@@ -13,23 +13,21 @@ Node.js version >= 10
 npm version >= 6
 ```
 
-### Installing
+### Installing & Deploying
 
 > From github
 
 ```
-git clone https://github.com/CaioF/mongo-express-start
-cd mongo-express-start/
+git clone https://github.com/msdk-research/imu-gps-api-and-front
+cd imu-gps-api-and-front/
 npm i
+npm run dev
 ```
 
-> From npm
+> Attention!
+> Before deploying on a production server make sure you change all lines that are marked with `MARK:`  
 
-```
-npm i mongo-express-start
-```
-
-### Deploying
+### Scripts
 
 - `npm run dev` _runs nodemon dev server_
 - `node run start` _runs normal node server_
@@ -40,7 +38,6 @@ npm i mongo-express-start
 
 - [Node.js](https://nodejs.org/en/)
 - [Express]()
-- [MongoDB]()
 
 ## Authors
 

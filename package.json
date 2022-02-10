@@ -1,7 +1,7 @@
 {
-  "name": "mongo-express-start",
+  "name": "imu-gps-api-and-front",
   "version": "0.0.1",
-  "description": "A generator for a webapp server based on express, mongo and many other things 😀",
+  "description": "",
   "main": "main.js",
   "scripts": {
     "start": "node main.js",
@@ -11,13 +11,11 @@
   },
   "keywords": [
     "express",
-    "mongodb",
     "generator",
     "api",
     "webapp",
     "nodejs",
-    "template",
-    "nosql"
+    "template"
   ],
   "author": "C. Fleury <48jzmf6jk@relay.firefox.com>",
   "license": "Attribution-NonCommercial-NoDerivatives 4.0 International",
@@ -31,7 +29,6 @@
     "lodash": "^4.17.19",
     "moment": "^2.27.0",
     "moment-duration-format": "^2.3.2",
-    "mongodb": "^3.6.0",
     "morgan": "^1.10.0"
   },
   "devDependencies": {
