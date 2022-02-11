@@ -15,11 +15,11 @@ router.get('/', (req, res, next) => {
 });
 
 router.get('/gps', (req, res, next) => {
-  res.sendFile(path.resolve(__dirname + '../../../../pages/gps/gps.html'));
+  res.sendFile(path.resolve(__dirname + '../../../../app/pages/gps/gps.html'));
 });
 
 router.get('/imu', (req, res, next) => {
-  res.sendFile(path.resolve(__dirname + '../../../../pages/imu/imu.html'));
+  res.sendFile(path.resolve(__dirname + '../../../../app/pages/imu/imu.html'));
 });
 
 module.exports = router;
