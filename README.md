@@ -37,7 +37,9 @@ npm run dev
 ## Built With
 
 - [Node.js](https://nodejs.org/en/)
-- [Express]()
+- [Express](https://expressjs.com/)
+- [Leaflet](https://leafletjs.com/)
+- [PouchDB](https://pouchdb.com/)
 
 ## Authors
 
