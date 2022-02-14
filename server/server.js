@@ -1,4 +1,5 @@
 const express = require('express');
+const path = require('path');
 const morgan = require('morgan');
 const helmet = require('helmet');
 const cors = require('cors');
@@ -20,6 +21,7 @@ app.use(express.json()); // json parser
 // routes
 app.use('/api', api);
 app.use('/', web);
+app.use(express.static(path.join(__dirname,"../app/src")));
 
 app.use(middlewares.notFound); // 404 full path logging
 app.use(middlewares.errorHandler); // basic error handling
