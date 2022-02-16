@@ -30,7 +30,7 @@ router.get('/gps', (req, res) => {
   })
 })
 
-router.post('/imu', (req, res) => {
+router.get('/imu', (req, res) => {
   ParserIMU.readLines((data) => {
     res.json({
       message: data
@@ -38,7 +38,7 @@ router.post('/imu', (req, res) => {
   })
 })
 
-router.post('/gps', (req, res) => {
+router.get('/gps', (req, res) => {
   ParserGPS.readLines((data) => {
     res.json({
       message: data
