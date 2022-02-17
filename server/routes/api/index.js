@@ -19,18 +19,6 @@ router.get('/', (req, res) => {
 });
 
 router.get('/imu', (req, res) => {
-  res.status(404).json({
-    message: `Error: For the html page please query 'host:port/imu'\nFor the file's top n lines please query 'host:port/api/imu/:n'`
-  })
-})
-
-router.get('/gps', (req, res) => {
-  res.status(404).json({
-    message: `Error: For the html page please query 'host:port/gps'\nFor the file's top n lines please query 'host:port/api/gps/:n'`
-  })
-})
-
-router.post('/imu', (req, res) => {
   ParserIMU.readLines((data) => {
     res.json({
       message: data
@@ -38,7 +26,7 @@ router.post('/imu', (req, res) => {
   })
 })
 
-router.post('/gps', (req, res) => {
+router.get('/gps', (req, res) => {
   ParserGPS.readLines((data) => {
     res.json({
       message: data

@@ -1,8 +1,8 @@
 async function getData() {
-    let url = 'http://localhost:8888/api/imu'; // MARK: This needs to swapped to host's ip
+    let url = '/api/imu';
     try {
         let res = await fetch(url, {
-            method: 'POST',
+            method: 'GET',
             mode: 'cors',
             credentials: 'same-origin'
         });

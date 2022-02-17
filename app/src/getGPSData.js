@@ -18,7 +18,7 @@ openmapLayer.addTo(map);
 // yandexLayer.addTo(map); TODO: Yandex does not work, it seems it needs an API key, see https://github.com/shramov/leaflet-plugins/blob/master/examples/yandex.html
 
 async function getData(n) {
-    let url = `http://localhost:8888/api/gps/${n}`; // MARK: This needs to swapped to host's ip
+    let url = `/api/gps/${n}`;
     try {
         let res = await fetch(url, {
             method: 'GET',
