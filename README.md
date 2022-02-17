@@ -24,9 +24,6 @@ npm i
 npm run dev
 ```
 
-> Attention!
-> Before deploying on a production server make sure you change all lines that are marked with `MARK:`  
-
 ### Scripts
 
 - `npm run dev` _runs nodemon dev server_
