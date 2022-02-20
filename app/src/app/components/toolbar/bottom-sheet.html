@@ -1,0 +1,26 @@
+<mat-nav-list>
+    <a [routerLink]="['/gps-data']" mat-list-item (click)="openLink($event)">
+      <span mat-line>GPS Data</span>
+    </a>
+  
+    <a [routerLink]="['/imu-data']" mat-list-item (click)="openLink($event)">
+      <span mat-line>IMU Data</span>
+    </a>
+  
+    <a [routerLink]="['/wireless-settings']" mat-list-item (click)="openLink($event)">
+      <span mat-line>Wireless Settings</span>
+    </a>
+  
+    <a [routerLink]="['/gps-settings']" mat-list-item (click)="openLink($event)">
+      <span mat-line>GPS Settings</span>
+    </a>
+
+    <a [routerLink]="['/imu-settings']" mat-list-item (click)="openLink($event)">
+      <span mat-line>IMU Settings</span>
+    </a>
+  
+    <a [routerLink]="['/web-settings']" mat-list-item (click)="openLink($event)">
+      <span mat-line>Web Settings</span>
+    </a>
+  </mat-nav-list>
+  
