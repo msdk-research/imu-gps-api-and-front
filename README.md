@@ -1,6 +1,6 @@
 # IMU-GPS-API-AND-FRONT
 
-Node.js/express backend with a simple html/js frontend
+Node.js/express backend with an angular frontend
 
 ## Getting Started
 
@@ -37,6 +37,7 @@ npm run dev
 - [Express](https://expressjs.com/)
 - [Leaflet](https://leafletjs.com/)
 - [PouchDB](https://pouchdb.com/)
+- [Angular](https://angular.io/)
 
 ## Authors
 
