@@ -1,5 +1,9 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { LeafletModule } from '@asymmetrik/ngx-leaflet';
+import { MatInputModule } from '@angular/material/input'; 
+import { MatIconModule } from '@angular/material/icon';
 
 import { GpsDataComponent } from './gps-data/gps-data.component';
 import { ImuDataComponent } from './imu-data/imu-data.component';
@@ -21,7 +25,11 @@ import { MainComponent } from './main/main.component';
     MainComponent,
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    FormsModule,
+    LeafletModule,
+    MatInputModule,
+    MatIconModule
   ],
   exports: [
     GpsDataComponent,
