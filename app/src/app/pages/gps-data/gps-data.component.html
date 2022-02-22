@@ -1,13 +1,16 @@
 <mat-form-field style="width: 100%;" class="example-form-field" appearance="fill">
-  <mat-label>Get last 'N' lines of data</mat-label>
+  <mat-label>Get the top 'N' lines of data</mat-label>
   <input matInput style="height: 3rem !important; font-size: x-large;" type="string" [(ngModel)]="value">
-  <button style="height: 3rem !important; margin-bottom: 1rem;" *ngIf="value" matSuffix mat-icon-button aria-label="Enter" (click)="value='100'">
+  <button style="height: 3rem !important; margin-bottom: 1rem;" *ngIf="value" matSuffix mat-icon-button aria-label="Enter" (click)="renderData()">
     <mat-icon>arrow_forward</mat-icon>
   </button>
 </mat-form-field>
 
-
-<div style="height: 300px;"
+<div style="height: 300px; width: 500px"
      leaflet 
-     [leafletOptions]="options">
+     [leafletOptions]="options"
+     [leafletLayersControl]="layersControl">
 </div>
+
+<br />
+<div class="container"></div>

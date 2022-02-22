@@ -1,5 +1,5 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
-import { tileLayer, latLng } from 'leaflet';
+import * as L from "leaflet";
 
 @Component({
   selector: 'app-gps-data',
@@ -8,58 +8,96 @@ import { tileLayer, latLng } from 'leaflet';
 })
 export class GpsDataComponent implements OnInit, AfterViewInit {
 
+  /* eslint-disable  @typescript-eslint/no-explicit-any */
+  map;
+
+  private streetMaps = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    detectRetina: true,
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+  });
+
+  private wMaps = L.tileLayer('http://maps.wikimedia.org/osm-intl/{z}/{x}/{y}.png', {
+    detectRetina: true,
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+  });
+
+  layersControl = {
+    baseLayers: {
+      'Street Maps': this.streetMaps,
+      'Wikimedia Maps': this.wMaps
+    }, 
+    overlays: {}
+  };
+
   options = {
     layers: [
-      tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 19, attribution: '&copy; <a href="https://openstreetmap.org/copyright">OpenStreetMap contributors</a>' })
+      this.streetMaps,
+      this.wMaps
     ],
-    zoom: 5,
-    center: latLng(46.879966, -121.726909)
+    zoom: 17,
+    center: L.latLng(55.742, 37.527)
   };
 
   value = '100';
 
-//   getData(n: number) {
-//     let url = `/api/gps/${n}`;
-//     try {
-//         let res = await fetch(url, {
-//             method: 'GET',
-//             mode: 'cors',
-//             credentials: 'same-origin'
-//         });
-//         return await res.text();
-//     } catch (error) {
-//         console.log(error);
-//         return(error);
-//     }
-// }
+  renderData = async () => {
+    const container = document.querySelector('.container');
+    container!.innerHTML = `<p>Data is loading, please wait.</p>`;
+    let data = "";
 
-//   renderData() {
-//     const n = document.querySelector('.numberBox')!.value;
-//     const container = document.querySelector('.container');
-//     container!.innerHTML = `<p>Data is loading, please wait.</p>`;
-//     const data = (n: number) => new Promise (() => this.getData(n));
-//     container.innerHTML = `<p style="white-space: pre-wrap;">${data}</p>`;
+    try {
+      let res = await fetch(`/api/gps/${this.value}`, {
+        method: 'GET',
+        mode: 'cors',
+        credentials: 'same-origin'
+      });
+      data = await res.text();
+    } catch (err) {
+      console.log(err);
+    }
 
-//     const markers = [];
-//     data.split('\n').slice(2).forEach(row => {
-//         cells = row.split(',');
-//         const marker = [];
-//         if (typeof(cells[1]) != 'Number') {
-//             cells[2] == 'N' ? marker.push(cells[1]) : marker.push(-cells[1]); // if !N then lat = -lat
-//             cells[4] == 'E' ? marker.push(cells[3]) : marker.push(-cells[3]); // if !E then lon = -lon
-//             markers.push(marker);
-//         }
-//     });
+    if(data != "") {
+      container!.innerHTML = `<p style="white-space: pre-wrap;">${data}</p>`;
 
-//     for(let i = 0; i < markers.length; i++)
-//     {
-//         try {
-//             mark1 = markers[i];
-//             mark2 = markers[i+1]
-//             if(mark1[0] && mark2[0]) L.polyline([mark1, mark2], {color: 'red'}).addTo(map);
-//         } catch (error) {};
-//     }
-//   }
+      let latlng: [number, number] = [0,0];
+      let line: [number, number][] = [];
+      let lines: [number, number][][] = [];
+
+      data.split('\n').slice(2).forEach(row => {
+        let cells = row.split(',');
+        if (cells[1] != '-' && parseInt(cells[1])) {
+          cells[2] == 'N' ? latlng[0] = parseInt(cells[1]) : latlng[0] = -parseInt(cells[1]); // if !N then lat = -lat
+          cells[4] == 'E' ? latlng[1] = parseInt(cells[3]) : latlng[1] = -parseInt(cells[3]); // if !E then lng = -lng
+          // console.log('latlng: ', latlng, '\ntypeof(parseInt(cells[1])): ', typeof(parseInt(cells[1])), '\ncells[1]: ', cells[1]);
+          line.push(latlng);
+        } else if (line.length > 0) { // a break indicates that we have a new line
+          console.log('pushed ', line);
+          lines.push(line);
+          line = []; // clear array
+        }
+      });
+
+      console.log('line: ', line, '\nlines: ', lines);
+      if (line.length > 0) { lines.push(line) }; // in case there are no breaks after the last line
+
+      if (lines.length > 0) {
+          lines.forEach(poly => {
+            try {
+              console.log('added ', poly, 'to map');
+              L.polyline(poly, {color: 'red'}).addTo(this.map);
+            } catch (err) {
+              console.log(err);
+            }
+          });
+
+      } else {
+        container!.innerHTML = `<p>No valid data in the top ${this.value} lines.</p>`;
+      }
+
+    } else {
+      container!.innerHTML = `<p>Data is empty, check server logs and data source.</p>`;
+    }   
+  }
 
   constructor() { }
 

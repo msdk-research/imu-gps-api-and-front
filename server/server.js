@@ -21,7 +21,7 @@ app.use(express.json()); // json parser
 // routes
 app.use('/api', api);
 app.use('/', web);
-app.use(express.static(path.join(__dirname,"../app/src")));
+app.use(express.static(path.join(__dirname,"../app/dist/app")));
 
 app.use(middlewares.notFound); // 404 full path logging
 app.use(middlewares.errorHandler); // basic error handling
